@@ -13,7 +13,8 @@
     "@material-ui/styles": "^4.10.0",
     "next": "9.5.0",
     "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "react-dom": "16.13.1",
+    "typewriter-effect": "^2.13.1"
   },
   "devDependencies": {
     "babel-plugin-styled-components": "^1.11.1"

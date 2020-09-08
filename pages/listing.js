@@ -1,7 +1,7 @@
 import {Grid, Card, CardActionArea, CardMedia, ThemeProvider, CardContent, Typography} from '@material-ui/core'
 import Pagination from '@material-ui/lab/Pagination';
 import { makeStyles } from '@material-ui/styles'
-
+import Filters from './common/Filters'
 const useStyles = makeStyles({
   root: {
     
@@ -24,9 +24,11 @@ const useStyles = makeStyles({
 export default function Listing(){
   const classes = useStyles()
   return (
-    <Grid container className={classes.root}>
-      <Grid item xs="3"></Grid>
-      <Grid item xs="9" className={classes.listingContainer}>
+    <Grid container className={classes.root} spacing={2}>
+      <Grid item xs={3}>
+        <Filters />
+      </Grid>
+      <Grid item xs={9} className={classes.listingContainer}>
         <Grid container spacing={2}>
           {
             Array(30).fill(1).map(item => (
@@ -40,7 +42,7 @@ export default function Listing(){
                     />
                   </CardActionArea>
                   <CardContent >
-                    <Typography>
+                    <Typography variant="h4">
                       Title
                     </Typography>
                     <Typography>
