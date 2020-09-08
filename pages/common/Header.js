@@ -1,5 +1,5 @@
 import Grid from '@material-ui/core/Grid';
-import { Button, Avatar, Typography } from '@material-ui/core';
+import { Button, Avatar, Typography, Link } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles({
@@ -21,7 +21,7 @@ const useStyles = makeStyles({
     textTransform: 'none',
   },
   buttonText: {
-    fontSize: 32,
+    fontSize: 16,
     fontWeight: 'normal',
   },
   avatar: {
@@ -35,26 +35,32 @@ const useStyles = makeStyles({
 
 export default function Header() {
   const classes = useStyles()
-  console.log(classes)
+  function getRouteName(name){
+    if(['Billboards', 'Ads'].includes(name)) return '/listing'
+    else if(name === 'Home') return '/'
+    else if(name === 'About') return '/about'
+  }
   return(
     <Grid container className={classes.root}>
-      <Grid item xs="8" className={classes.flex}>
+      <Grid item xs={8} className={classes.flex}>
         <Avatar 
           className={classes.logo} 
           alt="logo" 
           src="https://tl.vhv.rs/dpng/s/416-4160680_from-liquipedia-playerunknowns-battlegrounds-wiki-logo-png-for.png" 
         />
         {
-          ['Home', 'Billboards', 'Ads', 'About'].map(buttonName => (
-            <Button className={`${classes.button}`} >
-              <Typography variant='h1' className={classes.buttonText}>
-                {buttonName}
-              </Typography>
-            </Button>
+          ['Home', 'Billboards', 'Ads', 'About'].map((buttonName, i) => (
+            <Link href={getRouteName(buttonName)} key={`button:${buttonName}:${i}`}>
+              <Button className={`${classes.button}`}>
+                <Typography variant='h1' className={classes.buttonText}>
+                  {buttonName}
+                </Typography>
+              </Button>
+            </Link>
           ))
         }
       </Grid>
-      <Grid item xs="4" className={classes.avatar}>
+      <Grid item xs={4} className={classes.avatar}>
         <Button variant="contained" color="primary" className={classes.authButton}>Signup</Button>
         <Button color="primary" className={classes.authButton}>Login</Button>
         {/* <Avatar alt="Remy Sharp" src="https://api.adorable.io/avatars/285/abott@adorable.png" /> */}
