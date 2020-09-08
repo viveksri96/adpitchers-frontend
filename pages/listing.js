@@ -1,22 +1,59 @@
-import {Grid, Card, CardActionArea, CardMedia, ThemeProvider} from '@material-ui/core'
-import Header from './common/Header'
-import { theme } from '../styles/theme'
-import Head from 'next/head'
+import {Grid, Card, CardActionArea, CardMedia, ThemeProvider, CardContent, Typography} from '@material-ui/core'
+import Pagination from '@material-ui/lab/Pagination';
+import { makeStyles } from '@material-ui/styles'
 
+const useStyles = makeStyles({
+  root: {
+    
+  },
+  listingContainer:{
+    // maxWidth: 1000,
+    marginTop: 16
+  },
+  cardContainer:{
+    maxWidth: 300,
+  },
+  paginationContainer: {
+    '& ul': {
+      justifyContent: 'center',
+    },
+    margin: '16px 0'
+  }
+})
 
 export default function Listing(){
+  const classes = useStyles()
   return (
-    <div>
-      <Grid container>
-        <Card>
-          <CardActionArea>
-              <CardMedia 
-                src="http://lorempixel.com/g/400/400/"
-              />
-          </CardActionArea>
-        </Card>
+    <Grid container className={classes.root}>
+      <Grid item xs="3"></Grid>
+      <Grid item xs="9" className={classes.listingContainer}>
+        <Grid container spacing={2}>
+          {
+            Array(30).fill(1).map(item => (
+              <Grid item>
+                <Card className={classes.cardContainer}>
+                  <CardActionArea>
+                    <CardMedia 
+                      component="img"
+                      src="http://lorempixel.com/g/300/200/"
+                      alt="cardlist"
+                    />
+                  </CardActionArea>
+                  <CardContent >
+                    <Typography>
+                      Title
+                    </Typography>
+                    <Typography>
+                      It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))
+          }
+        </Grid>
+        <Pagination className={classes.paginationContainer} count={10} />
       </Grid>
-      This will be the listing page.
-    </div>
+    </Grid>
   )
 }
