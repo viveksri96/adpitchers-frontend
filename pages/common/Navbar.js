@@ -33,7 +33,7 @@ const useStyles = makeStyles({
   }
 });
 
-export default function Header() {
+export default function Navbar() {
   const classes = useStyles()
   function getRouteName(name){
 
@@ -65,8 +65,12 @@ export default function Header() {
         }
       </Grid>
       <Grid item xs={4} className={classes.avatar}>
-        <Button color="primary" className={classes.authButton}>LOGIN</Button>
-        <Button color="primary" className={classes.authButton}>SIGN UP</Button>
+        <Link href="/login">
+          <Button color="primary" className={classes.authButton}>LOGIN</Button>
+        </Link>
+        <Link href="/signup">
+          <Button color="primary" className={classes.authButton}>SIGN UP</Button>
+        </Link>
         <Button variant="contained" color="secondary" className={classes.authButton}>POST A BID</Button>
         {/* <Avatar alt="Remy Sharp" src="https://api.adorable.io/avatars/285/abott@adorable.png" /> */}
       </Grid>

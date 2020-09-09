@@ -2,7 +2,7 @@ import { withStyles } from "@material-ui/styles"
 import { Grid, TextField, Button, Typography, Link } from "@material-ui/core"
 
 const styles = {
-  loginContainer: {
+  passwordResetContainer: {
     height: '100%',
     margin: '0 auto',
     display: 'flex',
@@ -18,31 +18,30 @@ const styles = {
   }
 }
 
-function Login(props){
+function ResetPassword(props){
   const {classes} = props
   return (
-    <Grid container className={classes.loginContainer} spacing={2}>
+    <Grid container className={classes.passwordResetContainer} spacing={2}>
       <Grid item>
-        <Typography variant="h3" style={{fontWeight: 'bold'}}>Sign in</Typography>
+        <Typography variant="h3" style={{fontWeight: 'bold'}}>Password reset</Typography>
       </Grid>
       <Grid item className={classes.newAccText}>
         <Typography variant="h6" >
-          Don't have an account? <Link href="/signup"><Typography component="span" style={{fontWeight: '600'}}>Sign up.</Typography></Link>
+          Enter your email to reset the password.
         </Typography>
       </Grid>
       <TextField fullWidth margin="normal" label="E-mail" variant="outlined" required />
-      <TextField fullWidth margin="normal" label="Password" variant="outlined" required />
       <Grid container>
         <Typography align="left" variant="caption"><em>Fields that are marked with * sign are required.</em></Typography>
       </Grid>
-      <Button style={{marginTop: 20}} fullWidth size="large" variant="contained" color="primary">Login</Button>
+      <Button style={{marginTop: 20}} fullWidth size="large" variant="contained" color="primary">Reset password</Button>
       <Grid item>
         <Typography variant="body1" className={classes.newAccText}>
-          Forgot your password? <Link href="/reset-password"><Typography component="span" style={{fontWeight: '600'}}>Reset Password</Typography></Link>
+          Remember your password? <Link href="/login"><Typography component="span" style={{fontWeight: '600'}}>Log in</Typography></Link>
         </Typography>
       </Grid>
     </Grid>
   )
 }
 
-export default withStyles(styles)(Login)
+export default withStyles(styles)(ResetPassword)
