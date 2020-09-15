@@ -66,8 +66,8 @@ function Home({classes}) {
           Adpitchers will make your product look modern and professional while saving you precious time.
         </Typography>
         <div style={{marginTop: 24}}>
-          <Button variant="outlined" size="large">Post a bid</Button>
-          <Button variant="primary" size="large" color="primary">Book a Billboard</Button>
+          <Button variant="contained" size="large" color="primary">Create an Ad</Button>
+          <Button size="large" color="secondary">Explore Ads</Button>
         </div>
       </Grid>
       <hr className={classes.divider} />
