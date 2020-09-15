@@ -4,6 +4,8 @@ import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles({
   root: {
+    position: 'sticky',
+    top: 0,
     padding: '16px 24px',
     borderBottom: '1px solid #eeeeee',
     // borderRadius: 3,

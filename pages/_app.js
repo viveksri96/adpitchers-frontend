@@ -6,7 +6,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { theme } from '../styles/theme';
 import Navbar from './common/Navbar';
 import '../styles/globals.css'
-
+import 'react-date-range/dist/styles.css'; // main style file
+import 'react-date-range/dist/theme/default.css'; // theme css file
 export default function MyApp(props) {
   const { Component, pageProps } = props;
 
