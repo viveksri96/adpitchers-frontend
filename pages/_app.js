@@ -8,6 +8,8 @@ import Navbar from './common/Navbar';
 import '../styles/globals.css'
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
+import { ServerStyleSheets } from '@material-ui/core/styles';
+import './config/environment'
 export default function MyApp(props) {
   const { Component, pageProps } = props;
 
@@ -19,18 +21,24 @@ export default function MyApp(props) {
     }
   }, []);
 
+  const sheets = new ServerStyleSheets();
+
   return (
     <React.Fragment>
       <Head>
         <title>My page</title>
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
       </Head>
-      <ThemeProvider theme={theme}>
-        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-        <CssBaseline />
-        <Navbar />
-        <Component {...pageProps} />
-      </ThemeProvider>
+      {
+        sheets.collect(
+          <ThemeProvider theme={theme}>
+            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+            <CssBaseline />
+            <Navbar />
+            <Component {...pageProps} />
+          </ThemeProvider>
+        )
+      }
     </React.Fragment>
   );
 }

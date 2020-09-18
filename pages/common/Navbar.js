@@ -73,7 +73,7 @@ export default function Navbar() {
         <Link href="/signup">
           <Button color="primary" className={classes.authButton}>SIGN UP</Button>
         </Link>
-        <Button variant="contained" color="secondary" className={classes.authButton}>POST A BID</Button>
+        {/* <Button variant="contained" color="secondary" className={classes.authButton}>POST A BID</Button> */}
         {/* <Avatar alt="Remy Sharp" src="https://api.adorable.io/avatars/285/abott@adorable.png" /> */}
       </Grid>
     </Grid>

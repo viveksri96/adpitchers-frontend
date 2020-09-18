@@ -1,5 +1,6 @@
 import { withStyles } from "@material-ui/styles"
 import { Grid, TextField, Button, Typography, Link } from "@material-ui/core"
+import {Axios} from './config/environment'
 
 const styles = {
   loginContainer: {
@@ -20,6 +21,8 @@ const styles = {
 
 function Login(props){
   const {classes} = props
+
+  
   return (
     <Grid container className={classes.loginContainer} spacing={2}>
       <Grid item>
@@ -35,7 +38,7 @@ function Login(props){
       <Grid container>
         <Typography align="left" variant="caption"><em>Fields that are marked with * sign are required.</em></Typography>
       </Grid>
-      <Button style={{marginTop: 20}} fullWidth size="large" variant="contained" color="primary">Login</Button>
+      <Button style={{marginTop: 20}} fullWidth size="large" variant="contained" color="primary" onClick={handleClick}>Login</Button>
       <Grid item>
         <Typography variant="body1" className={classes.newAccText}>
           Forgot your password? <Link href="/reset-password"><Typography component="span" style={{fontWeight: '600'}}>Reset Password</Typography></Link>
@@ -43,6 +46,18 @@ function Login(props){
       </Grid>
     </Grid>
   )
+}
+
+
+const handleClick = () => {
+  const input = {
+    "email": "admin@admin.com",
+    "password": "123"
+  }
+  Axios.post('/login/', input).then(res => {
+    localStorage.setItem('adpitchers_token', res.data.token)
+    window.location.replace(window.location.origin + '/')
+  })
 }
 
 export default withStyles(styles)(Login)

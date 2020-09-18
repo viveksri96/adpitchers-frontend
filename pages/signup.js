@@ -12,8 +12,7 @@ const styles = {
     flexDirection: 'column',
     justifyContent: 'center',
     padding: '0 10px',
-  }
-  
+  }  
 }
 
 function Signup(props){

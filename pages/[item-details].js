@@ -8,7 +8,7 @@ const Bimg = "https://static.scientificamerican.com/sciam/cache/file/92E141F8-36
 export default function(){
   return (
     <div>
-      <BiddingPage />
+      <BillboardDetailPage />
     </div>
   )
 }
