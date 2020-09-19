@@ -1,8 +1,8 @@
 import Grid from '@material-ui/core/Grid';
 import { Button, Avatar, Typography, Link } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
+import { withStyles } from '@material-ui/styles';
 
-const useStyles = makeStyles({
+const styles = {
   root: {
     position: 'sticky',
     top: 0,
@@ -33,50 +33,75 @@ const useStyles = makeStyles({
   authButton: {
     height: 40
   }
-});
+};
 
-export default function Navbar() {
-  const classes = useStyles()
-  function getRouteName(name){
+class Navbar extends React.Component {
 
-    if('How it works') return '/listing'
-    else if('Explore') return '/listing'
-    // else if(name === 'Home') return '/'
-    // else if(name === 'About') return '/about'
+  constructor(props){
+    super(props)
+    this.state = {}
   }
-  return(
-    <Grid container className={classes.root}>
-      <Grid item xs={8} className={classes.flex}>
-        <Link href="/">
-          <Avatar 
-            className={classes.logo} 
-            alt="logo" 
-            src="https://tl.vhv.rs/dpng/s/416-4160680_from-liquipedia-playerunknowns-battlegrounds-wiki-logo-png-for.png" 
-          />
-        </Link>
-        {
-          ['How it works', 'Explore'].map((buttonName, i) => (
-            <Link href={getRouteName(buttonName)} key={`button:${buttonName}:${i}`}>
-              <Button className={`${classes.button}`}>
-                <Typography variant='h1' className={classes.buttonText}>
-                  {buttonName}
-                </Typography>
-              </Button>
+
+  componentDidMount() {
+    let token = localStorage.getItem('adpitchers_token')
+    this.setState({isAuthenticated: token})
+  }
+  
+  render(){
+    const {classes} = this.props
+    const {isAuthenticated} = this.state
+    function getRouteName(name){
+
+      if('How it works') return '/listing'
+      else if('Explore') return '/listing'
+      // else if(name === 'Home') return '/'
+      // else if(name === 'About') return '/about'
+    }
+    return(
+      <div>
+        <Grid container className={classes.root}>
+          <Grid item xs={8} className={classes.flex}>
+            <Link href="/">
+              <Avatar 
+                className={classes.logo} 
+                alt="logo" 
+                src="https://tl.vhv.rs/dpng/s/416-4160680_from-liquipedia-playerunknowns-battlegrounds-wiki-logo-png-for.png" 
+              />
             </Link>
-          ))
-        }
-      </Grid>
-      <Grid item xs={4} className={classes.avatar}>
-        <Link href="/login">
-          <Button color="primary" className={classes.authButton}>LOGIN</Button>
-        </Link>
-        <Link href="/signup">
-          <Button color="primary" className={classes.authButton}>SIGN UP</Button>
-        </Link>
-        {/* <Button variant="contained" color="secondary" className={classes.authButton}>POST A BID</Button> */}
-        {/* <Avatar alt="Remy Sharp" src="https://api.adorable.io/avatars/285/abott@adorable.png" /> */}
-      </Grid>
-    </Grid>
-  )
+            {
+              ['How it works', 'Explore'].map((buttonName, i) => (
+                <Link href={getRouteName(buttonName)} key={`button:${buttonName}:${i}`}>
+                  <Button className={`${classes.button}`}>
+                    <Typography variant='h1' className={classes.buttonText}>
+                      {buttonName}
+                    </Typography>
+                  </Button>
+                </Link>
+              ))
+            }
+          </Grid>
+          <Grid item xs={4} className={classes.avatar}>
+            {
+              !isAuthenticated &&
+              <>
+                <Link href="/login">
+                  <Button color="primary" className={classes.authButton}>LOGIN</Button>
+                </Link>
+                <Link href="/signup">
+                  <Button color="primary" className={classes.authButton}>SIGN UP</Button>
+                </Link>
+              </>
+            }
+            {/* <Button variant="contained" color="secondary" className={classes.authButton}>POST A BID</Button> */}
+            {
+              isAuthenticated && <Avatar alt="Remy Sharp" src="https://api.adorable.io/avatars/285/abott@adorable.png" />
+            }
+          </Grid>
+        </Grid>
+      </div>
+    )
+  }
 }
 
+
+export default withStyles(styles)(Navbar)
