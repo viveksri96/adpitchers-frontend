@@ -1,5 +1,5 @@
 import Grid from '@material-ui/core/Grid';
-import { Button, Avatar, Typography, Link } from '@material-ui/core';
+import { Button, Avatar, Typography, Link, Popover, Box } from '@material-ui/core';
 import { withStyles } from '@material-ui/styles';
 
 const styles = {
@@ -32,6 +32,16 @@ const styles = {
   },
   authButton: {
     height: 40
+  },
+  userDetailsPopover: {
+    width: '150px',
+    padding: '12px 8px'
+  },
+  dropdownItem: {
+    cursor: 'pointer',
+    '&:hover': {
+      background: '#e2e8de96'
+    }
   }
 };
 
@@ -39,17 +49,35 @@ class Navbar extends React.Component {
 
   constructor(props){
     super(props)
-    this.state = {}
+    this.state = {
+      anchorEl: null
+    }
   }
 
   componentDidMount() {
     let token = localStorage.getItem('adpitchers_token')
     this.setState({isAuthenticated: token})
   }
+
+  handleClick = (event) => {
+    this.setState({anchorEl: event.currentTarget});
+  };
+
+  handleClose = () => {
+    this.setState({anchorEl: null})
+  };
+
+  logout = () => {
+    localStorage.removeItem('adpitchers_token')
+    window.location.href = 'http://127.0.0.1:8000/logout/'
+  }
   
   render(){
     const {classes} = this.props
-    const {isAuthenticated} = this.state
+    const {isAuthenticated, anchorEl} = this.state
+
+    const NAVBAR_BTN = ['Explore']
+    if(!isAuthenticated) NAVBAR_BTN.unshift('How it works')
     function getRouteName(name){
 
       if('How it works') return '/listing'
@@ -69,7 +97,7 @@ class Navbar extends React.Component {
               />
             </Link>
             {
-              ['How it works', 'Explore'].map((buttonName, i) => (
+              NAVBAR_BTN.map((buttonName, i) => (
                 <Link href={getRouteName(buttonName)} key={`button:${buttonName}:${i}`}>
                   <Button className={`${classes.button}`}>
                     <Typography variant='h1' className={classes.buttonText}>
@@ -94,7 +122,28 @@ class Navbar extends React.Component {
             }
             {/* <Button variant="contained" color="secondary" className={classes.authButton}>POST A BID</Button> */}
             {
-              isAuthenticated && <Avatar alt="Remy Sharp" src="https://api.adorable.io/avatars/285/abott@adorable.png" />
+              isAuthenticated && 
+              <div>
+                <Avatar alt="Remy Sharp" src="https://api.adorable.io/avatars/285/abott@adorable.png" onClick={this.handleClick}/>
+                <Popover
+                  id={'user-details-popover'}
+                  open={Boolean(anchorEl)}
+                  anchorEl={anchorEl}
+                  onClose={this.handleClose}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                  }}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                >
+                  <Box className={classes.userDetailsPopover}>
+                    <Typography align="center" className={classes.dropdownItem} onClick={this.logout}>Logout</Typography>
+                  </Box>
+                </Popover>
+              </div>
             }
           </Grid>
         </Grid>

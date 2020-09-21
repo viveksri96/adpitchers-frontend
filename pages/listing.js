@@ -13,6 +13,8 @@ import {
 import Pagination from '@material-ui/lab/Pagination';
 import { withStyles } from '@material-ui/styles'
 import Filters from './common/Filters'
+import {Axios} from './config/environment'
+
 const styles = {
   root: {
     
@@ -43,9 +45,37 @@ const styles = {
 
 class Listing extends React.Component {
 
+  constructor(props){
+    super(props)
+    this.state = {
+      page: 1
+    }
+  }
+
+  componentWillMount(){
+    this.getData()
+  }
+
+
+  getData = () => {
+    Axios.get('/billboards', {
+      params: {
+        page: this.state.page
+      }
+    }).then(res => {
+      this.setState({list: res.data.data, totalPages: res.data.paging.total_pages})
+    })
+  }
+
+  handlePagination = (e, page) => {
+    this.setState({page}, this.getData)
+  }
 
   render(){
     const {classes} = this.props
+    const {list} = this.state
+
+    console.log(this.state)
     return (
       <Grid container className={classes.root} spacing={2}>
         <Grid item xs={3}>
@@ -82,9 +112,9 @@ class Listing extends React.Component {
             </Grid>
           <Grid container spacing={2}>
             {
-              Array(30).fill(1).map(item => (
+              list && list.map(item => (
                 <Grid item>
-                  <Link href="/[item-details]" as={'/hello-world'}>
+                  <Link href="/[item-details]" as={item.id}>
                     <Card className={classes.cardContainer}>
                       <CardActionArea>
                         <CardMedia 
@@ -95,10 +125,10 @@ class Listing extends React.Component {
                       </CardActionArea>
                       <CardContent >
                         <Typography variant="h4">
-                          Title
+                          {item.location}
                         </Typography>
                         <Typography>
-                          It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters
+                          {item.description}
                         </Typography>
                       </CardContent>
                     </Card>
@@ -107,7 +137,7 @@ class Listing extends React.Component {
               ))
             }
           </Grid>
-          <Pagination className={classes.paginationContainer} count={10} />
+          <Pagination className={classes.paginationContainer} count={this.state.totalPages} onChange={this.handlePagination} />
         </Grid>
       </Grid>
     )
