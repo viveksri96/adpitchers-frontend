@@ -21,7 +21,6 @@ export default function MyApp(props) {
     }
   }, []);
 
-  const sheets = new ServerStyleSheets();
 
   return (
     <React.Fragment>
@@ -29,16 +28,12 @@ export default function MyApp(props) {
         <title>My page</title>
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
       </Head>
-      {
-        sheets.collect(
-          <ThemeProvider theme={theme}>
-            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-            <CssBaseline />
-            <Navbar />
-            <Component {...pageProps} />
-          </ThemeProvider>
-        )
-      }
+      <ThemeProvider theme={theme}>
+        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+        <CssBaseline />
+        <Navbar />
+        <Component {...pageProps} />
+      </ThemeProvider>
     </React.Fragment>
   );
 }
