@@ -4,12 +4,12 @@ import Head from 'next/head';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { theme } from '../styles/theme';
-import Navbar from './common/Navbar';
+import Navbar from '../common/Navbar';
 import '../styles/globals.css'
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { ServerStyleSheets } from '@material-ui/core/styles';
-import './config/environment'
+import '../config/environment'
 export default function MyApp(props) {
   const { Component, pageProps } = props;
 

@@ -1,7 +1,7 @@
 import {Grid, Typography, TextField, Button, Link} from '@material-ui/core'
 import { withStyles } from '@material-ui/styles'
 import { Formik } from 'formik'
-import {Axios} from './config/environment'
+import {Axios} from '../config/environment'
 
 const styles = {
   signupContainer: {

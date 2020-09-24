@@ -12,8 +12,8 @@ import {
 } from '@material-ui/core'
 import Pagination from '@material-ui/lab/Pagination';
 import { withStyles } from '@material-ui/styles'
-import Filters from './common/Filters'
-import {Axios} from './config/environment'
+import Filters from '../common/Filters'
+import {Axios} from '../config/environment'
 import Carousel from 'react-material-ui-carousel'
 
 const styles = {

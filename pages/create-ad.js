@@ -1,8 +1,8 @@
 import { Grid, Input, TextField, Typography, Box, Button } from "@material-ui/core"
 import { makeStyles, withStyles } from "@material-ui/styles"
-import Maps from "./common/Maps"
+import Maps from "../common/Maps"
 import { Formik } from 'formik';
-import { Axios, createEnv } from "./config/environment";
+import { Axios, createEnv } from "../config/environment";
 
 const styles = {
   root: {

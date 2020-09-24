@@ -1,6 +1,6 @@
 import { withStyles } from "@material-ui/styles"
 import { Grid, TextField, Button, Typography, Link } from "@material-ui/core"
-import {Axios} from './config/environment'
+import {Axios} from '../config/environment'
 import { Formik } from "formik"
 
 const styles = {
