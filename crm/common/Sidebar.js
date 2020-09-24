@@ -1,4 +1,5 @@
 import { withStyles } from "@material-ui/styles"
+import { withRouter } from 'next/router'
 import { 
   List,
   ListSubheader,
@@ -31,13 +32,14 @@ class Sidebar extends React.Component{
     super(props)
     this.state = {
       showPaymentMoreOptions: false,
-      showBillboardMoreOptions: false
+      showBillboardMoreOptions: false,
+      showSettingsMoreOptions: false
     }
   }
 
   render(){
     const { classes } = this.props
-    const {showPaymentMoreOptions, showBillboardMoreOptions} = this.state
+    const {showPaymentMoreOptions, showBillboardMoreOptions, showSettingsMoreOptions} = this.state
     return(
       <List
         component="nav"
@@ -72,20 +74,44 @@ class Sidebar extends React.Component{
         </ListItem>
         <Collapse in={showPaymentMoreOptions} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            <ListItem button className={classes.nestedItem} >
-              <ListItemText primary="Invoices" classes={{primary: classes.nestedText}}/>
-            </ListItem>
-            <ListItem button className={classes.nestedItem}>
-              <ListItemText primary="Orders" classes={{primary: classes.nestedText}}/>
-            </ListItem>
+            <Link href="/orders-history">
+              <ListItem button className={classes.nestedItem}>
+                <ListItemText primary="Orders" classes={{primary: classes.nestedText}}/>
+              </ListItem>
+            </Link>
             <ListItem button className={classes.nestedItem}>
               <ListItemText primary="Update payment info" classes={{primary: classes.nestedText}}/>
             </ListItem>
           </List>
         </Collapse>
-        <ListItem button>
+        <ListItem button onClick={() => this.setState({showSettingsMoreOptions: !showSettingsMoreOptions})}>
           <ListItemText primary="Settings" />
+          {showSettingsMoreOptions ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
+        <Collapse in={showSettingsMoreOptions} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <Link href="/user/account">
+              <ListItem button className={classes.nestedItem}>
+                <ListItemText primary="Account" classes={{primary: classes.nestedText}}/>
+              </ListItem>
+            </Link>
+            <Link href="/user/password-update">
+              <ListItem button className={classes.nestedItem}>
+                <ListItemText primary="Password update" classes={{primary: classes.nestedText}}/>
+              </ListItem>
+            </Link>
+            <Link href="/user/notifications">
+              <ListItem button className={classes.nestedItem}>
+                <ListItemText primary="Notifications" classes={{primary: classes.nestedText}}/>
+              </ListItem>
+            </Link>
+            <Link href="/user/help">
+              <ListItem button className={classes.nestedItem}>
+                <ListItemText primary="Help" classes={{primary: classes.nestedText}}/>
+              </ListItem>
+            </Link>
+          </List>
+        </Collapse>
       </List>
     )
   }

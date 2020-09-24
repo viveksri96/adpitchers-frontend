@@ -51,6 +51,17 @@ class MyBillboard extends React.Component{
     })
   }
 
+  handleDelete(id){
+    Axios.delete(`/billboard/${id}`)
+      .then(res => {
+        this.setState((state) => ({list: state.list.filter(item => item.id !== id)}))
+      })
+      .catch(e => {
+        console.log('Something went wrong.')
+      })
+  }
+
+
   render(){
     const {classes} = this.props
     const {showCreateModal, list} = this.state
@@ -96,6 +107,7 @@ class MyBillboard extends React.Component{
                       <Button 
                         color="secondary"
                         startIcon={<Delete />}
+                        onClick={this.handleDelete.bind(this, billboard.id)}
                       >
                         Delete
                       </Button>

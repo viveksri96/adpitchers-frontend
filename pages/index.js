@@ -66,7 +66,7 @@ function Home({classes}) {
           Adpitchers will make your product look modern and professional while saving you precious time.
         </Typography>
         <div style={{marginTop: 24}}>
-          <Link href="/create">
+          <Link href="/create-ad">
             <Button variant="contained" size="large" color="primary">Create an Ad</Button>
           </Link>
           <Link href="/listing">

@@ -140,7 +140,9 @@ class Navbar extends React.Component {
                   }}
                 >
                   <Box className={classes.userDetailsPopover}>
-                    <Link href={'/dashboard'}><Typography align="left" className={classes.dropdownItem}>Go to dashboard</Typography></Link>
+                    <Link href={'/my-billboard'}><Typography align="left" className={classes.dropdownItem}>Billboards</Typography></Link>
+                    <Link href={'/orders-history'}><Typography align="left" className={classes.dropdownItem}>Orders</Typography></Link>
+                    <Link href={'/user/account'}><Typography align="left" className={classes.dropdownItem}>Settings</Typography></Link>
                     <Typography align="left" className={classes.dropdownItem} onClick={this.logout}>Logout</Typography>
                   </Box>
                 </Popover>

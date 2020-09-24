@@ -90,9 +90,9 @@ class Login extends React.Component{
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
-                <Grid container>
-                  <Typography align="left" variant="caption"><em>Fields that are marked with * sign are required.</em></Typography>
-                  <Typography align="left" variant="caption">{this.state.error}</Typography>
+                <Grid container style={{flexDirection: "column"}}>
+                  <Typography align="left" variant="caption" component="div"><em>Fields that are marked with * sign are required.</em></Typography>
+                  <Typography align="left" variant="caption" component="div">{this.state.error}</Typography>
                 </Grid>
                 <Button 
                   style={{marginTop: 20}} 

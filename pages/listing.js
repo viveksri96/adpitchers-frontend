@@ -78,7 +78,6 @@ class Listing extends React.Component {
     const {classes} = this.props
     const {list, paging} = this.state
 
-    console.log(this.state)
     return (
       <Grid container className={classes.root} spacing={2}>
         <Grid item xs={3}>
@@ -117,7 +116,7 @@ class Listing extends React.Component {
             {
               list && list.map(billboard => (
                 <Grid item>
-                  <Link href="/[item-details]" as={billboard.id}>
+                  <Link href={`/pd/${billboard.id}`}>
                     <Card className={classes.cardContainer}>
                       <Carousel>
                         {

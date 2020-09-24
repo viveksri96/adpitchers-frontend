@@ -1,4 +1,4 @@
-import { Grid, Input, TextField, Typography, Box, Button } from "@material-ui/core"
+import { Grid, Input, TextField, Typography, Box, Button, CircularProgress } from "@material-ui/core"
 import { makeStyles, withStyles } from "@material-ui/styles"
 import Maps from "../common/Maps"
 import { Formik } from 'formik';
@@ -79,14 +79,17 @@ class AdsForm extends React.Component{
   }
 
   handleSubmit = (values, { setSubmitting }) => {
+    this.setState({loading: true})
     Axios.post('/billboard/', values)
+      .then(res => window.location.href =  '/my-billboard')
+      .catch(e => console.log('error creating modal'))
     setSubmitting(false);
   }
 
 
   render(){
     const {classes} = this.props
-    const {page} = this.state
+    const {page, loading} = this.state
     return(
       <Grid container className={classes.root}>
         <div className={classes.headerBackground} />
@@ -183,8 +186,11 @@ class AdsForm extends React.Component{
                             disabled={isSubmitting}
                             className={classes.createBtn}
                             type="submit"
+                            disabled={loading}
+                            disableElevation={true}
+                            endIcon={loading && <CircularProgress style={{color: 'white'}} size={16} />}
                           >
-                            Create
+                            Create 
                           </Button>
                         </Grid>
                       </>
