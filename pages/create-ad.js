@@ -9,6 +9,7 @@ const styles = {
     
   },
   headerBackground: {
+    display: 'none',
     height: '500px',
     width: '100%',
     background: 'linear-gradient(55deg,#164188,#007fed)',
@@ -42,7 +43,7 @@ const styles = {
   }
 }
 
-class CreateAd extends React.Component{
+class AdsForm extends React.Component{
 
   constructor(props){
     super(props)
@@ -67,7 +68,7 @@ class CreateAd extends React.Component{
         let reader = new FileReader();
         reader.onload = e => {
           let content = e.target.result;
-          resolve({content, name: file.name})
+          resolve({content, filename: file.name})
         };
         reader.readAsDataURL(file);
       }))
@@ -117,7 +118,7 @@ class CreateAd extends React.Component{
                     {
                       page === 1 &&
                       <>
-                        <Typography variant="h3">Create Billboard</Typography>
+                        <Typography variant="h3">Enter Billboard details</Typography>
                         <Grid item xs={12}>
                           <Typography varint="h6" className={classes.labelText}>Description</Typography>
                           <TextField 
@@ -168,7 +169,14 @@ class CreateAd extends React.Component{
                           </Box>
                         </Grid>
                         <Grid item xs={12}>
-                          {/* <Button variant="contained" color="primary" className={classes.createBtn} onClick={() => this.setState({page: 2})}>Next</Button> */}
+                          {/* <Button 
+                            variant="contained" 
+                            color="primary" 
+                            className={classes.createBtn} 
+                            onClick={() => this.setState({page: 2})}
+                          >
+                            Next
+                          </Button> */}
                           <Button 
                             variant="contained" 
                             color="primary" 
@@ -184,10 +192,20 @@ class CreateAd extends React.Component{
                     {
                       page === 2 &&
                       <>
+                        <Typography variant="h3">Create Slots</Typography>
+                        <Grid>
+                          <Button>Add New Slots</Button>
+                          
+                        </Grid>
+                      </>
+                    }
+                    {/* {
+                      page === 2 &&
+                      <>
                         Choose Location 
                         <Maps />
                       </>
-                    }
+                    } */}
                   </form>
                 </Grid>
               )
@@ -199,4 +217,6 @@ class CreateAd extends React.Component{
   }
 }
 
-export default withStyles(styles)(CreateAd)
+// const Slot
+
+export default withStyles(styles)(AdsForm)

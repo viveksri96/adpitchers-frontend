@@ -14,6 +14,7 @@ import Pagination from '@material-ui/lab/Pagination';
 import { withStyles } from '@material-ui/styles'
 import Filters from './common/Filters'
 import {Axios} from './config/environment'
+import Carousel from 'react-material-ui-carousel'
 
 const styles = {
   root: {
@@ -48,7 +49,9 @@ class Listing extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      page: 1
+      page: 1,
+      paging: {},
+      list: []
     }
   }
 
@@ -63,7 +66,7 @@ class Listing extends React.Component {
         page: this.state.page
       }
     }).then(res => {
-      this.setState({list: res.data.data, totalPages: res.data.paging.total_pages})
+      this.setState({list: res.data.data, paging: res.data.paging})
     })
   }
 
@@ -73,7 +76,7 @@ class Listing extends React.Component {
 
   render(){
     const {classes} = this.props
-    const {list} = this.state
+    const {list, paging} = this.state
 
     console.log(this.state)
     return (
@@ -83,7 +86,7 @@ class Listing extends React.Component {
         </Grid>
         <Grid item xs={9} className={classes.listingContainer}>
           <Grid container className={classes.listDetailContainer}>
-            <Typography variant="h5" margin="dense" className={classes.showingofText}>Showing 30 of 100</Typography>
+            <Typography variant="h5" margin="dense" className={classes.showingofText}>Showing {list.length} of {paging.total_items}</Typography>
             <Grid container>
               <Grid item xs={8}>
                 {
@@ -112,23 +115,23 @@ class Listing extends React.Component {
             </Grid>
           <Grid container spacing={2}>
             {
-              list && list.map(item => (
+              list && list.map(billboard => (
                 <Grid item>
-                  <Link href="/[item-details]" as={item.id}>
+                  <Link href="/[item-details]" as={billboard.id}>
                     <Card className={classes.cardContainer}>
-                      <CardActionArea>
-                        <CardMedia 
-                          component="img"
-                          src="http://lorempixel.com/g/300/200/"
-                          alt="cardlist"
-                        />
-                      </CardActionArea>
+                      <Carousel>
+                        {
+                          billboard.billboard_image.map( (item, i) => (
+                            <img key={item.filename} width="300" height='200' src={item.url}/>
+                          ))
+                        }
+                      </Carousel>
                       <CardContent >
                         <Typography variant="h4">
-                          {item.location}
+                          {billboard.location}
                         </Typography>
                         <Typography>
-                          {item.description}
+                          {billboard.description}
                         </Typography>
                       </CardContent>
                     </Card>
@@ -137,7 +140,7 @@ class Listing extends React.Component {
               ))
             }
           </Grid>
-          <Pagination className={classes.paginationContainer} count={this.state.totalPages} onChange={this.handlePagination} />
+          <Pagination className={classes.paginationContainer} count={paging.total_pages} onChange={this.handlePagination} />
         </Grid>
       </Grid>
     )

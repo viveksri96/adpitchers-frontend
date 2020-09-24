@@ -140,7 +140,8 @@ class Navbar extends React.Component {
                   }}
                 >
                   <Box className={classes.userDetailsPopover}>
-                    <Typography align="center" className={classes.dropdownItem} onClick={this.logout}>Logout</Typography>
+                    <Link href={'/dashboard'}><Typography align="left" className={classes.dropdownItem}>Go to dashboard</Typography></Link>
+                    <Typography align="left" className={classes.dropdownItem} onClick={this.logout}>Logout</Typography>
                   </Box>
                 </Popover>
               </div>
