@@ -74,17 +74,17 @@ class Signup extends React.Component{
                 </Grid>
                 <Grid container spacing={2}>
                   <Grid item xs={6}>
-                  <TextField 
-                    fullWidth 
-                    name="firstName"
-                    margin="normal" 
-                    label="First Name" 
-                    variant="outlined" 
-                    required
-                    value={values.firstName}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  />
+                    <TextField 
+                      fullWidth 
+                      name="firstName"
+                      margin="normal" 
+                      label="First Name" 
+                      variant="outlined" 
+                      required
+                      value={values.firstName}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
                   </Grid>
                   <Grid item xs={6}>
                   <TextField 

@@ -25,11 +25,14 @@ const styles = {
   listingContainer: {
     padding: '20px'
   },
-  buttonContainer: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    paddingBottom: '12px',
-  },
+  pageTitle: {
+    marginBottom: 24
+  }
+  // buttonContainer: {
+  //   display: 'flex',
+  //   justifyContent: 'flex-end',
+  //   paddingBottom: '12px',
+  // },
 }
 
 class MyBillboard extends React.Component{
@@ -72,19 +75,21 @@ class MyBillboard extends React.Component{
           <Sidebar />
         </Grid>
         <Grid item xs={10} className={classes.listingContainer}>
-          <div className={classes.buttonContainer}>
+          <Typography variant="h3" className={classes.pageTitle}>
+            My Billboards
             <Link href="/create-ad">
               <Button 
-                variant='contained'
-                onClick={() => this.setState({showCreateModal: true})}
                 color="primary"
+                variant="outlined"
+                disableElevation={true}
                 className={classes.createBtn}
                 startIcon={<Add />}
+                style={{marginLeft: 12}}
               >
-                <Typography variant='body1'>Post a new Billboard.</Typography>
+                <Typography variant='body1'>New Billboard</Typography>
               </Button>
             </Link>
-          </div>
+          </Typography>
           <Grid container spacing={2}>
             {
               list && list.map(billboard => (
@@ -100,6 +105,7 @@ class MyBillboard extends React.Component{
                     <CardContent >
                       <Button 
                         color="primary" 
+                        onClick={() => this.setState({showCreateModal: false})}
                         startIcon={<Edit />}
                       >
                         Update
@@ -117,14 +123,15 @@ class MyBillboard extends React.Component{
               ))
             }
           </Grid>
-          {/* <Modal
+          <Modal
             open={showCreateModal}
             onClose={() => this.setState({showCreateModal: false})}
             aria-labelledby="create-modal"
             aria-describedby="create-modal-ads"
           >
-            <AdsForm />
-          </Modal> */}
+            <Typography>model text</Typography>
+            {/* <AdsForm /> */}
+          </Modal>
         </Grid>
       </Grid>
     )
