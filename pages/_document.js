@@ -9,8 +9,6 @@ export default class MyDocument extends Document {
       <Html lang="en">
         <Head>
           {/* PWA primary color */}
-          <title>Adpitchers</title>
-          <meta property="og:title" content="My page title" key="title" />
           <meta name="theme-color" content={theme.palette.primary.main} />
           <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet" />
         </Head>
