@@ -10,7 +10,7 @@ import {
   // ExpandMoreIcon
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/styles'
-// import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import {ExpandMore} from '@material-ui/icons';
 
 
 const plusIcon = (<b>+</b>)
@@ -44,12 +44,18 @@ class Filters extends React.Component{
   constructor(props){
     super(props)
     this.state = {
-      
+      startPrice: 0,
+      endPrice: 0
     }
+  }
+
+  handleChange = (e, value) => {
+    this.setState({startPrice: value[0], endPrice: value[1]})
   }
 
   render(){
     const {classes} = this.props
+    const {startPrice, endPrice} = this.state
     return(
       <div className={classes.root} >
         <Typography variant="h5" className={classes.filterText} component="div">
@@ -58,23 +64,28 @@ class Filters extends React.Component{
         </Typography>
         <Accordion>
           <AccordionSummary
-            expandIcon={plusIcon}
+            expandIcon={<ExpandMore />}
             aria-controls="panel1a-content"
             id="panel1a-header"
           >
-            <Typography className={classes.filterName}>Categories</Typography>
+            <Typography className={classes.filterName}>Price</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <TextField 
-              placeholder="Search Categories"
-              variant="outlined"
-              size="small"
-              fullWidth
-              onChange={console.log}
-            />  
+            <Slider
+              value={[startPrice, endPrice]}
+              onChange={this.handleChange}
+              valueLabelDisplay="auto"
+              aria-labelledby="range-slider"
+              marks={[
+                {value: 0, label: '0'},
+                {value: 100, label: '100+'},
+              ]}
+              // getAriaValueText={valuetext}
+            />
+            
           </AccordionDetails>
         </Accordion>
-        <Accordion>
+        {/* <Accordion>
           <AccordionSummary
             expandIcon={plusIcon}
             aria-controls="panel2a-content"
@@ -98,13 +109,13 @@ class Filters extends React.Component{
             <Typography className={classes.filterName}>Location Range</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Slider
-              value={[50, 60]}
-              onChange={this.handleChange}
-              valueLabelDisplay="auto"
-              aria-labelledby="range-slider"
-              // getAriaValueText={valuetext}
-            />
+            <TextField 
+              placeholder="Search Categories"
+              variant="outlined"
+              size="small"
+              fullWidth
+              onChange={console.log}
+            />  
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -124,7 +135,7 @@ class Filters extends React.Component{
               // getAriaValueText={valuetext}
             />
           </AccordionDetails>
-        </Accordion>
+        </Accordion> */}
       </div>
     )
   }

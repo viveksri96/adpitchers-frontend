@@ -24,6 +24,12 @@ const styles = {
     fontWeight: 16,
     color: '#121037',
     marginBottom: 16,
+    '& >.Typewriter > .Typewriter__wrapper ': {
+      color: 'red'
+    },
+    '& >.Typewriter > .Typewriter__cursor ': {
+      color: 'red'
+    }
   },
   productDetailContainer: {
     width: '100%',
@@ -67,10 +73,10 @@ function Home({classes}) {
         </Typography>
         <div style={{marginTop: 24}}>
           <Link href="/create-ad">
-            <Button variant="contained" size="large" color="primary">Create an Ad</Button>
+            <Button variant="contained" size="large" color="primary" disableElevation={true}>Create an Ad</Button>
           </Link>
           <Link href="/listing">
-            <Button size="large" color="secondary">Explore Ads</Button>
+            <Button size="large" color="secondary" disableElevation={true}>Explore Ads</Button>
           </Link>
         </div>
       </Grid>

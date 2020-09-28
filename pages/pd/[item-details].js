@@ -21,7 +21,7 @@ export default class ItemDetail extends React.Component{
   render(){
     return (
       <div>
-        <BillboardDetailPage details={this.props.details} />
+        <BillboardDetailPage details={this.props.details || {}} />
       </div>
     )
   }
@@ -53,30 +53,29 @@ const BillboardDetailPage = withStyles({
             <Carousel autoPlay="false" animation="slide">
               {
                 details.billboard_image.map((item, i) => (
-                  <img key={item.filename} width="600" height='600' src={item.url}/>
-                  // <ReactImageMagnify 
-                  //   {
-                  //     ...{
-                  //       smallImage: {
-                  //           alt: 'Wristwatch by Ted Baker London',
-                  //           src: item.url,
-                  //           isFluidWidth: true,
-                  //       },
-                  //       largeImage: {
-                  //           src: item.url,
-                  //           width: 1000,
-                  //           height: 1000
-                  //       },
-                  //       enlargedImageContainerDimensions: {
-                  //         width: 800,
-                  //         height: 800
-                  //       },
-                  //       enlargedImageContainerStyle: {
-                  //         zIndex: 99
-                  //       }
-                  //     }
-                  //   } 
-                  // />
+                  <ReactImageMagnify 
+                    {
+                      ...{
+                        smallImage: {
+                            alt: 'Wristwatch by Ted Baker London',
+                            src: item.url,
+                            isFluidWidth: true,
+                        },
+                        largeImage: {
+                            src: item.url,
+                            width: 1000,
+                            height: 1000
+                        },
+                        enlargedImageContainerDimensions: {
+                          width: 800,
+                          height: 800
+                        },
+                        enlargedImageContainerStyle: {
+                          zIndex: 99
+                        }
+                      }
+                    } 
+                  />
                 ))
               }
             </Carousel>
@@ -85,7 +84,7 @@ const BillboardDetailPage = withStyles({
         <Grid item xs={4}>
           <Grid container style={{flexDirection: 'column'}}>
             <Typography variant="h5" component="div">Mumbai, Maharashtra</Typography>
-            <Typography variant="body1" component="div">Large(15*30)</Typography>
+            <Typography variant="body1" component="div">By Vikas Enterprise Ltd.</Typography>
             <Typography variant="h6" component="div">Large(15*30)</Typography>
             <hr style={{width: '100%'}}/>
             <Typography variant="h6" component="div">Select Dates</Typography>
@@ -100,19 +99,19 @@ const BillboardDetailPage = withStyles({
             />
             <Button color="primary">Check Availability</Button>
             <Button variant="h6" >Book Now</Button>
-            <Typography variant="h6" >Description</Typography>
-            <Typography variant="body1">
+            {/* <Typography variant="h6" >Description</Typography> */}
+            {/* <Typography variant="body1">
               Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy 
               text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
               It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
               It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently
               with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-            </Typography>
+            </Typography> */}
           </Grid>
         </Grid>
-        <Grid item xs={2}>
+        {/* <Grid item xs={2}>
           Advertisement
-        </Grid>
+        </Grid> */}
       </Grid> 
     </Grid>
   )

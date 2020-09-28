@@ -10,6 +10,7 @@ import {
   Select,
   MenuItem
 } from '@material-ui/core'
+import {BookmarkBorder} from '@material-ui/icons'
 import Pagination from '@material-ui/lab/Pagination';
 import { withStyles } from '@material-ui/styles'
 import Filters from '../common/Filters'
@@ -38,9 +39,21 @@ const styles = {
   },
   paginationContainer: {
     '& ul': {
-      justifyContent: 'center',
+      justifyContent: 'center'
     },
     margin: '16px 0'
+  },
+  loaderContainer: {
+    height: '600px',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  indicatorContainer: {
+    position: 'absolute',
+    bottom: '0px',
   }
 }
 
@@ -114,11 +127,17 @@ class Listing extends React.Component {
             </Grid>
           <Grid container spacing={2}>
             {
-              list && list.map(billboard => (
+              list && list.length
+              ? 
+              list.map(billboard => (
                 <Grid item>
                   <Link href={`/pd/${billboard.id}`}>
                     <Card className={classes.cardContainer}>
-                      <Carousel>
+                      <Carousel 
+                        // autoPlay={false}
+                        className={classes.carouselContainer}
+                        indicatorContainerProps={{className: classes.indicatorContainer}}
+                      >
                         {
                           billboard.billboard_image.map( (item, i) => (
                             <img key={item.filename} width="300" height='200' src={item.url}/>
@@ -126,17 +145,25 @@ class Listing extends React.Component {
                         }
                       </Carousel>
                       <CardContent >
-                        <Typography variant="h4">
-                          {billboard.location}
+                        <Typography variant="body1" style={{fontWeight: 600}}>
+                          {billboard.location || 'Lucknow, India'} <span style={{float: 'right', color: '#c4bbbb'}}><BookmarkBorder /></span>
                         </Typography>
-                        <Typography>
-                          {billboard.description}
+                        <Typography variant="body2">
+                          {'lorem ipsum' || billboard.description }
+                        </Typography>
+                        <Typography variant="body1" style={{color: '#c4bbbb'}}>
+                          &#8377; {(+billboard.price).toFixed(2)}
                         </Typography>
                       </CardContent>
                     </Card>
                   </Link>
                 </Grid>
               ))
+              :
+              <div className={classes.loaderContainer}>
+                <div><img src={'/assets/loader.gif'} /></div>
+                <Typography align="center" variant="body2"><em>Finding the best <br/> billboard.</em></Typography>
+              </div>
             }
           </Grid>
           <Pagination className={classes.paginationContainer} count={paging.total_pages} onChange={this.handlePagination} />

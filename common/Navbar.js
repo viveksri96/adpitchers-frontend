@@ -1,5 +1,11 @@
 import Grid from '@material-ui/core/Grid';
 import { Button, Avatar, Typography, Link, Popover, Box } from '@material-ui/core';
+import {
+  Receipt,
+  Settings,
+  ExitToApp,
+  AddToQueue
+} from '@material-ui/icons'
 import { withStyles } from '@material-ui/styles';
 
 const styles = {
@@ -34,11 +40,16 @@ const styles = {
     height: 40
   },
   userDetailsPopover: {
-    width: '150px',
+    width: '250px',
     padding: '12px 8px'
   },
   dropdownItem: {
     cursor: 'pointer',
+    fontSize: 18,
+    color: '#4b4c52',
+    padding: '10px 8px',
+    display: 'flex',
+    alignItems: 'center',
     '&:hover': {
       background: '#e2e8de96'
     }
@@ -140,10 +151,10 @@ class Navbar extends React.Component {
                   }}
                 >
                   <Box className={classes.userDetailsPopover}>
-                    <Link href={'/my-billboard'}><Typography align="left" className={classes.dropdownItem}>Billboards</Typography></Link>
-                    <Link href={'/orders-history'}><Typography align="left" className={classes.dropdownItem}>Orders</Typography></Link>
-                    <Link href={'/user/account'}><Typography align="left" className={classes.dropdownItem}>Settings</Typography></Link>
-                    <Typography align="left" className={classes.dropdownItem} onClick={this.logout}>Logout</Typography>
+                    <Link href={'/my-billboard'}><Typography align="left" className={classes.dropdownItem}><AddToQueue style={{marginRight: 6}}/>My Billboards</Typography></Link>
+                    <Link href={'/orders-history'}><Typography align="left" className={classes.dropdownItem}><Receipt style={{marginRight: 6}}/>Orders</Typography></Link>
+                    <Link href={'/user/account'}><Typography align="left" className={classes.dropdownItem}><Settings style={{marginRight: 6}}/> Settings</Typography></Link>
+                    <Typography align="left" className={classes.dropdownItem} onClick={this.logout}><ExitToApp style={{marginRight: 6}}/>Logout</Typography>
                   </Box>
                 </Popover>
               </div>
