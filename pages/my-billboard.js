@@ -1,75 +1,74 @@
-import { 
-  Button, 
-  Grid,
+import {
+  Button,
   Card,
-  CardActionArea,
-  CardMedia,
   CardContent,
-  Typography, 
-  Paper,
-  Link
+  Grid,
+  Link,
+  Typography,
 } from "@material-ui/core";
+import Modal from "@material-ui/core/Modal";
+import { Add, Delete, Edit } from "@material-ui/icons";
 import { withStyles } from "@material-ui/styles";
-import Modal from '@material-ui/core/Modal';
+import Carousel from "react-material-ui-carousel";
+import { Axios, createEnv } from "../config/environment";
+import ManageSlot from "../crm/billboard/ManageSlot";
 import Sidebar from "../crm/common/Sidebar";
-import AdsForm from './create-ad'
-import {Edit, Delete, Add} from '@material-ui/icons';
-import {Axios, createEnv} from '../config/environment'
-import Carousel from 'react-material-ui-carousel'
-
 
 const styles = {
-  root: {
-    
-  },
+  root: {},
   listingContainer: {
-    padding: '20px'
+    padding: "20px",
   },
   pageTitle: {
-    marginBottom: 24
-  }
+    marginBottom: 24,
+  },
   // buttonContainer: {
   //   display: 'flex',
   //   justifyContent: 'flex-end',
   //   paddingBottom: '12px',
   // },
-}
+};
 
-class MyBillboard extends React.Component{
-  constructor(props){
-    super(props)
+class MyBillboard extends React.Component {
+  constructor(props) {
+    super(props);
     this.state = {
-      showCreateModal: false
-    }
+      showCreateModal: false,
+    };
   }
 
-  componentDidMount(){
-    createEnv({token: localStorage.getItem('adpitchers_token')})
-    this.getData()
+  componentDidMount() {
+    createEnv({ token: localStorage.getItem("adpitchers_token") });
+    this.getData();
   }
-  
+
   getData = () => {
-    Axios.get('/user/billboards').then(res => {
-      this.setState({list: res.data.data, totalPages: res.data.paging.total_pages})
-    })
-  }
+    Axios.get("/user/billboards").then((res) => {
+      console.log(this);
+      this.setState({
+        list: res.data.data,
+        totalPages: res.data.paging.total_pages,
+      });
+    });
+  };
 
-  handleDelete(id){
+  handleDelete(id) {
     Axios.delete(`/billboard/${id}`)
-      .then(res => {
-        this.setState((state) => ({list: state.list.filter(item => item.id !== id)}))
+      .then((res) => {
+        this.setState((state) => ({
+          list: state.list.filter((item) => item.id !== id),
+        }));
       })
-      .catch(e => {
-        console.log('Something went wrong.')
-      })
+      .catch((e) => {
+        console.log("Something went wrong.");
+      });
   }
 
+  render() {
+    const { classes } = this.props;
+    const { showCreateModal, list } = this.state;
 
-  render(){
-    const {classes} = this.props
-    const {showCreateModal, list} = this.state
-
-    return(
+    return (
       <Grid container className={classes.root}>
         <Grid item xs={2}>
           <Sidebar />
@@ -78,54 +77,59 @@ class MyBillboard extends React.Component{
           <Typography variant="h3" className={classes.pageTitle}>
             My Billboards
             <Link href="/create-ad">
-              <Button 
+              <Button
                 color="primary"
                 variant="outlined"
                 disableElevation={true}
                 className={classes.createBtn}
                 startIcon={<Add />}
-                style={{marginLeft: 12}}
+                style={{ marginLeft: 12 }}
               >
-                <Typography variant='body1'>New Billboard</Typography>
+                <Typography variant="body1">New Billboard</Typography>
               </Button>
             </Link>
           </Typography>
           <Grid container spacing={2}>
-            {
-              list && list.map(billboard => (
+            {list &&
+              list.map((billboard) => (
                 <Grid item>
                   <Card className={classes.cardContainer}>
                     <Carousel>
-                      {
-                        billboard.billboard_image.map( (item, i) => (
-                          <img key={item.filename} width="300" height='200' src={item.url}/>
-                        ))
-                      }
+                      {billboard.billboard_image.map((item, i) => (
+                        <img
+                          key={item.filename}
+                          width="300"
+                          height="200"
+                          src={item.url}
+                        />
+                      ))}
                     </Carousel>
-                    <CardContent >
-                      <Button 
-                        color="primary" 
-                        onClick={() => this.setState({showCreateModal: false})}
+                    <CardContent>
+                      <Button
+                        color="primary"
+                        onClick={() =>
+                          this.setState({ showCreateModal: false })
+                        }
                         startIcon={<Edit />}
                       >
                         Update
                       </Button>
-                      <Button 
+                      <Button
                         color="secondary"
                         startIcon={<Delete />}
                         onClick={this.handleDelete.bind(this, billboard.id)}
                       >
                         Delete
                       </Button>
+                      <ManageSlot billboard={billboard} />
                     </CardContent>
                   </Card>
                 </Grid>
-              ))
-            }
+              ))}
           </Grid>
           <Modal
             open={showCreateModal}
-            onClose={() => this.setState({showCreateModal: false})}
+            onClose={() => this.setState({ showCreateModal: false })}
             aria-labelledby="create-modal"
             aria-describedby="create-modal-ads"
           >
@@ -134,8 +138,8 @@ class MyBillboard extends React.Component{
           </Modal>
         </Grid>
       </Grid>
-    )
+    );
   }
 }
 
-export default withStyles(styles)(MyBillboard)
+export default withStyles(styles)(MyBillboard);
