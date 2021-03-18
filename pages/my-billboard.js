@@ -44,7 +44,6 @@ class MyBillboard extends React.Component {
 
   getData = () => {
     Axios.get("/user/billboards").then((res) => {
-      console.log(this);
       this.setState({
         list: res.data.data,
         totalPages: res.data.paging.total_pages,
