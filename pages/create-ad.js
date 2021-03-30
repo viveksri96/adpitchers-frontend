@@ -8,7 +8,7 @@ const styles = {
   root: {
     
   },
-  headerBackground: {
+  headerBackground: { 
     display: 'none',
     height: '500px',
     width: '100%',
