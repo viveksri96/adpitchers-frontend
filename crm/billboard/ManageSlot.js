@@ -5,6 +5,7 @@ import moment from "moment";
 import React from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import { RangeDatePicker } from "react-google-flight-datepicker";
+import { Axios, createEnv } from "../../config/environment";
 
 const localizer = momentLocalizer(moment);
 
@@ -46,19 +47,34 @@ class ManageSlot extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showSlotModal: true,
-      events: [
-        {
-          id: 0,
-          title: "Tanishq",
-          allDay: true,
-          start: moment().subtract(5, "day").toDate(),
-          end: moment().add(5, "day").toDate(),
-        },
-      ],
+      showSlotModal: false,
+      events: [],
       tempStart: null,
       tempEnd: null,
     };
+  }
+
+  componentDidMount() {
+    createEnv({ token: localStorage.getItem("adpitchers_token") });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (!prevState.showSlotModal && this.state.showSlotModal) this.getData();
+  }
+
+  getData() {
+    const { billboard } = this.props;
+    Axios.get(`/billboard/${billboard.id}/slots`).then((res) => {
+      this.setState({
+        events: res.data.map((item) => ({
+          id: item.id,
+          title: item.description,
+          start: item.start_date,
+          end: item.end_date,
+          allDay: true,
+        })),
+      });
+    });
   }
 
   handleSlot() {

@@ -8,6 +8,7 @@ import {
 } from "@material-ui/core";
 import Modal from "@material-ui/core/Modal";
 import { Add, Delete, Edit } from "@material-ui/icons";
+import { Pagination } from "@material-ui/lab";
 import { withStyles } from "@material-ui/styles";
 import Carousel from "react-material-ui-carousel";
 import { Axios, createEnv } from "../config/environment";
@@ -21,6 +22,11 @@ const styles = {
   },
   pageTitle: {
     marginBottom: 24,
+  },
+  paginationContainer: {
+    justifyContent: "center",
+    display: "flex",
+    margin: "32px 24px",
   },
   // buttonContainer: {
   //   display: 'flex',
@@ -65,7 +71,7 @@ class MyBillboard extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { showCreateModal, list } = this.state;
+    const { showCreateModal, list, totalPages } = this.state;
 
     return (
       <Grid container className={classes.root}>
@@ -126,6 +132,9 @@ class MyBillboard extends React.Component {
                 </Grid>
               ))}
           </Grid>
+          <div className={classes.paginationContainer}>
+            <Pagination count={totalPages} variant="outlined" shape="rounded" />
+          </div>
           <Modal
             open={showCreateModal}
             onClose={() => this.setState({ showCreateModal: false })}
