@@ -8,7 +8,6 @@ export const createEnv = (config) => {
     // timeout: 1000,
     headers: {
       "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
       Authorization: (config && `Token ${config.token}`) || "",
     },
   });
