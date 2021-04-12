@@ -30,6 +30,7 @@ export default function MyApp(props) {
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyClpOQn_l5R-Qw-Evc2ZQA4nomsiCQylWw&libraries=places"></script>
       </Head>
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}

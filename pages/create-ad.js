@@ -8,6 +8,7 @@ import {
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/styles";
 import { Formik } from "formik";
+import PlacesAutocomplete from "react-places-autocomplete";
 import { Axios, createEnv } from "../config/environment";
 
 const styles = {
@@ -22,6 +23,7 @@ const styles = {
   },
   formContainer: {
     marginTop: 100,
+    marginBottom: 60,
     backgroundColor: "white",
     maxWidth: "700px",
     margin: "0 auto",
@@ -52,6 +54,7 @@ class AdsForm extends React.Component {
     super(props);
     this.state = {
       page: 1,
+      address: "",
     };
   }
 
@@ -87,6 +90,17 @@ class AdsForm extends React.Component {
       .then((res) => (window.location.href = "/my-billboard"))
       .catch((e) => console.log("error creating modal"));
     setSubmitting(false);
+  };
+
+  handleChange = (address) => {
+    this.setState({ address });
+  };
+
+  handleSelect = (address) => {
+    geocodeByAddress(address)
+      .then((results) => getLatLng(results[0]))
+      .then((latLng) => console.log("Success", latLng))
+      .catch((error) => console.error("Error", error));
   };
 
   render() {
@@ -131,6 +145,7 @@ class AdsForm extends React.Component {
                         <TextField
                           fullWidth
                           name="description"
+                          placeholder="Enter Description"
                           margin="normal"
                           variant="outlined"
                           multiline
@@ -146,6 +161,7 @@ class AdsForm extends React.Component {
                         <TextField
                           fullWidth
                           margin="normal"
+                          placeholder="Enter Size"
                           name="size"
                           variant="outlined"
                           size="small"
@@ -160,6 +176,7 @@ class AdsForm extends React.Component {
                         <TextField
                           fullWidth
                           margin="normal"
+                          placeholder="Enter Price"
                           type="number"
                           name="price"
                           variant="outlined"
@@ -169,6 +186,63 @@ class AdsForm extends React.Component {
                           onChange={handleChange}
                           onBlur={handleBlur}
                         />
+                        <Typography varint="h6" className={classes.labelText}>
+                          Location
+                        </Typography>
+                        <PlacesAutocomplete
+                          value={this.state.address}
+                          onChange={this.handleChange}
+                          onSelect={this.handleSelect}
+                        >
+                          {({
+                            getInputProps,
+                            suggestions,
+                            getSuggestionItemProps,
+                            loading,
+                          }) => (
+                            <div>
+                              <TextField
+                                fullWidth
+                                margin="normal"
+                                variant="outlined"
+                                size="small"
+                                margin="none"
+                                {...getInputProps({
+                                  placeholder: "Search Places ...",
+                                  className: "location-search-input",
+                                })}
+                              />
+                              <div className="autocomplete-dropdown-container">
+                                {loading && <div>Loading...</div>}
+                                {suggestions.map((suggestion) => {
+                                  const className = suggestion.active
+                                    ? "suggestion-item--active"
+                                    : "suggestion-item";
+                                  // inline style for demonstration purpose
+                                  const style = suggestion.active
+                                    ? {
+                                        backgroundColor: "#fafafa",
+                                        cursor: "pointer",
+                                      }
+                                    : {
+                                        backgroundColor: "#ffffff",
+                                        cursor: "pointer",
+                                      };
+                                  return (
+                                    <div
+                                      {...getSuggestionItemProps(suggestion, {
+                                        className,
+                                        style,
+                                      })}
+                                    >
+                                      <span>{suggestion.description}</span>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          )}
+                        </PlacesAutocomplete>
                         <Box
                           component="div"
                           className={classes.imageUploadContainer}

@@ -1,7 +1,7 @@
-import React from 'react';
-import Document, { Html, Head, Main, NextScript } from 'next/document';
-import { ServerStyleSheets } from '@material-ui/core/styles';
-import {theme} from '../styles/theme';
+import { ServerStyleSheets } from "@material-ui/core/styles";
+import Document, { Head, Html, Main, NextScript } from "next/document";
+import React from "react";
+import { theme } from "../styles/theme";
 
 export default class MyDocument extends Document {
   render() {
@@ -10,7 +10,10 @@ export default class MyDocument extends Document {
         <Head>
           {/* PWA primary color */}
           <meta name="theme-color" content={theme.palette.primary.main} />
-          <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet" />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Lato&display=swap"
+            rel="stylesheet"
+          />
         </Head>
         <body>
           <Main />
@@ -60,6 +63,9 @@ MyDocument.getInitialProps = async (ctx) => {
   return {
     ...initialProps,
     // Styles fragment is rendered after the app and page rendering finish.
-    styles: [...React.Children.toArray(initialProps.styles), sheets.getStyleElement()],
+    styles: [
+      ...React.Children.toArray(initialProps.styles),
+      sheets.getStyleElement(),
+    ],
   };
 };
