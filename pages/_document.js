@@ -14,6 +14,7 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Lato&display=swap"
             rel="stylesheet"
           />
+          <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
         </Head>
         <body>
           <Main />

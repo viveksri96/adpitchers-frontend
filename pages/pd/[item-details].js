@@ -1,21 +1,58 @@
 import { Breadcrumbs, Button, Grid, Link, Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/styles";
+import moment from "moment";
+import { useRef } from "react";
 import { DateRangePicker } from "react-date-range";
 import Carousel from "react-material-ui-carousel";
 import MoreDetails from "../../components/productListing/MoreDetails";
-import { Axios } from "../../config/environment";
+import { Axios, createEnv } from "../../config/environment";
+import Login from "../login";
 export default class ItemDetail extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      newSlot: [],
+      slots: [],
+      newFocusedRange: 0,
+    };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    const token = localStorage.getItem("adpitchers_token");
+    if (token) {
+      createEnv({ token: token });
+      this.getSlot(this.props.details.id);
+    } else {
+      this.setState({ showLogin: true });
+    }
+  }
+
+  async getSlot(id) {
+    let slots = await Axios.get(`/billboard/${id}/slots`).catch(console.log);
+    this.setState({ slots: slots.data });
+  }
+
+  handleSlot = (value) => {
+    this.setState({
+      newSlot: Object.values(value),
+      newFocusedRange: Object.keys(value)[0],
+    });
+  };
 
   render() {
+    let { showLogin, slots, newSlot, newFocusedRange } = this.state;
     return (
       <div>
-        <BillboardDetailPage details={this.props.details || {}} />
+        {showLogin ? (
+          <Login stayOnSamePage={true} />
+        ) : (
+          <BillboardDetailPage
+            details={this.props.details || {}}
+            slots={[...slots, ...newSlot]}
+            handleSlot={this.handleSlot}
+            newFocusedRange={newFocusedRange}
+          />
+        )}
       </div>
     );
   }
@@ -30,12 +67,29 @@ const BillboardDetailPage = withStyles({
     justifyContent: "center",
   },
   rangeDatePicker: {
-    width: 450,
+    justifyContent: "center",
+    "& .rdrDefinedRangesWrapper": {
+      display: "none",
+    },
   },
   slideContainer: {
     height: 600,
   },
-})(({ classes, details }) => {
+})(({ classes, details, slots = [], handleSlot, newFocusedRange }) => {
+  slots = slots.map((slot, i) => {
+    return {
+      startDate: slot.startDate || moment(slot.start_date).toDate(),
+      endDate: slot.endDate || moment(slots.end_date).toDate(),
+      selection: `selection:${i}`,
+      color: slot.startDate ? "blue" : "#c5bdbd6b",
+      key: i,
+      disabled: true,
+      showDateDisplay: false,
+    };
+  });
+
+  const datePickerElem = useRef(null);
+
   return (
     <Grid container spacing={2} className={classes.productDetailContainer}>
       <Grid container spacing={2} style={{ justifyContent: "space-around" }}>
@@ -106,28 +160,28 @@ const BillboardDetailPage = withStyles({
               </span>
             </Typography>
             <DateRangePicker
-              ranges={[
-                {
-                  startDate: new Date(),
-                  endDate: new Date(),
-                  key: "selection",
-                },
-              ]}
-              onChange={() => {}}
+              ranges={slots}
+              focusedRange={[slots.length - 1, 0]}
+              rangeColors={["red", "blue", "green"]}
+              minDate={new Date()}
+              onChange={handleSlot}
               className={classes.rangeDatePicker}
             />
 
-            <Button
-              variant="contained"
-              size="large"
-              style={{
-                backgroundColor: "orange",
-                color: "white",
-                margin: "12px 0",
-              }}
-            >
-              <b>Book Now</b>
-            </Button>
+            <Link href="/cart" style={{ width: "100%" }}>
+              <Button
+                variant="contained"
+                size="large"
+                fullWidth
+                style={{
+                  backgroundColor: "orange",
+                  color: "white",
+                  margin: "12px 0",
+                }}
+              >
+                <b>Book Now</b>
+              </Button>
+            </Link>
           </Grid>
         </Grid>
       </Grid>

@@ -1,19 +1,18 @@
-import React from 'react'
-import { 
-  Grid, 
-  Slider, 
-  Typography, 
+import {
   Accordion,
-  AccordionSummary,
   AccordionDetails,
-  TextField
+  AccordionSummary,
+  Slider,
+
   // ExpandMoreIcon
-} from '@material-ui/core'
-import { withStyles } from '@material-ui/styles'
-import {ExpandMore} from '@material-ui/icons';
+  Typography,
+} from "@material-ui/core";
+import { ExpandMore } from "@material-ui/icons";
+import { withStyles } from "@material-ui/styles";
+import React from "react";
+import { _throttle } from "./helpers";
 
-
-const plusIcon = (<b>+</b>)
+const plusIcon = <b>+</b>;
 const styles = {
   root: {
     // borderRight: '2px solid #ddd',
@@ -24,43 +23,67 @@ const styles = {
   },
   filterText: {
     fontWeight: 600,
-    marginBottom: 20
+    marginBottom: 20,
   },
   locationContainer: {
-    width: '100%'
+    width: "100%",
   },
   filterName: {
-    fontWeight: 'bold',
-    
+    fontWeight: "bold",
   },
   clearAllText: {
-    float: 'right',
+    float: "right",
     lineHeight: 2.5,
-    cursor: 'pointer',
-  }
-}
+    cursor: "pointer",
+  },
+};
 
-class Filters extends React.Component{
-  constructor(props){
-    super(props)
+class Filters extends React.Component {
+  constructor(props) {
+    super(props);
     this.state = {
-      startPrice: 0,
-      endPrice: 0
+      filterData: {
+        range: 0,
+        price: [0, 100],
+      },
+    };
+    this.onChange = _throttle(this.props.onFilterChange);
+  }
+
+  componentDidMount() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(() => {
+        this.setState();
+      });
+    } else {
+      alert("Please enable you location for us to show you better results.");
     }
   }
 
   handleChange = (e, value) => {
-    this.setState({startPrice: value[0], endPrice: value[1]})
+    this.setState({ startPrice: value[0], endPrice: value[1] });
+  };
+
+  handleSlider(type, e, value) {
+    const { filterData } = this.state;
+    filterData[type] = value;
+    this.setState({ filterData }, () => this.onChange(this.state.filterData));
   }
 
-  render(){
-    const {classes} = this.props
-    const {startPrice, endPrice} = this.state
-    return(
-      <div className={classes.root} >
+  render() {
+    const { classes } = this.props;
+    const { filterData } = this.state;
+    return (
+      <div className={classes.root}>
         <Typography variant="h5" className={classes.filterText} component="div">
-            Filters 
-            <Typography component="span" color="primary" className={classes.clearAllText}>Clear All</Typography>
+          Filters
+          <Typography
+            component="span"
+            color="primary"
+            className={classes.clearAllText}
+          >
+            Clear All
+          </Typography>
         </Typography>
         <Accordion>
           <AccordionSummary
@@ -72,22 +95,21 @@ class Filters extends React.Component{
           </AccordionSummary>
           <AccordionDetails>
             <Slider
-              value={[startPrice, endPrice]}
-              onChange={this.handleChange}
+              value={filterData.price}
+              onChange={this.handleSlider.bind(this, "price")}
               valueLabelDisplay="auto"
               aria-labelledby="range-slider"
               marks={[
-                {value: 0, label: '0'},
-                {value: 100, label: '100+'},
+                { value: 0, label: "0" },
+                { value: 100, label: "100+" },
               ]}
               // getAriaValueText={valuetext}
             />
-            
           </AccordionDetails>
         </Accordion>
-        {/* <Accordion>
+        {/*<Accordion>
           <AccordionSummary
-            expandIcon={plusIcon}
+            expandIcon={<ExpandMore />}
             aria-controls="panel2a-content"
             id="panel2a-header"
           >
@@ -95,32 +117,36 @@ class Filters extends React.Component{
           </AccordionSummary>
           <AccordionDetails>
             <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-              sit amet blandit leo lobortis eget.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
+              eget.
             </Typography>
           </AccordionDetails>
-        </Accordion>
+        </Accordion>*/}
         <Accordion>
           <AccordionSummary
-            expandIcon={plusIcon}
+            expandIcon={<ExpandMore />}
             aria-controls="panel2a-content"
             id="panel2a-header"
+            step="5"
           >
-            <Typography className={classes.filterName}>Location Range</Typography>
+            <Typography className={classes.filterName}>
+              Range (in kms)
+            </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <TextField 
-              placeholder="Search Categories"
-              variant="outlined"
-              size="small"
-              fullWidth
-              onChange={console.log}
-            />  
+            <Slider
+              value={filterData.range}
+              onChange={this.handleSlider.bind(this, "range")}
+              valueLabelDisplay="auto"
+              aria-labelledby="range-slider"
+              // getAriaValueText={valuetext}
+            />
           </AccordionDetails>
         </Accordion>
-        <Accordion>
+        {/*<Accordion>
           <AccordionSummary
-            expandIcon={plusIcon}
+            expandIcon={<ExpandMore />}
             aria-controls="panel2a-content"
             id="panel2a-header"
           >
@@ -135,11 +161,10 @@ class Filters extends React.Component{
               // getAriaValueText={valuetext}
             />
           </AccordionDetails>
-        </Accordion> */}
+        </Accordion>*/}
       </div>
-    )
+    );
   }
 }
 
-
-export default withStyles(styles)(Filters)
+export default withStyles(styles)(Filters);

@@ -30,7 +30,11 @@ class Login extends React.Component {
     Axios.post("/login/", values)
       .then((res) => {
         localStorage.setItem("adpitchers_token", res.data.token);
-        window.location.replace(window.location.origin + "/");
+        if (this.props.stayOnSamePage) {
+          window.location.reload();
+        } else {
+          window.location.replace(window.location.origin + "/");
+        }
       })
       .catch((err) => {
         setSubmitting(false);
@@ -40,7 +44,6 @@ class Login extends React.Component {
 
   render() {
     const { classes } = this.props;
-
     return (
       <Formik
         initialValues={{

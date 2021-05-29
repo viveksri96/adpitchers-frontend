@@ -6,9 +6,6 @@
     "[javascript]": {
       "editor.formatOnSave": true
     },
-    "[javascriptreact]": {
-      "editor.formatOnSave": false
-    },
     "editor.tabSize": 2,
     "editor.detectIndentation": true,
     "editor.fontFamily": "Fira Code, Menlo, Monaco, 'Courier New', monospace",
