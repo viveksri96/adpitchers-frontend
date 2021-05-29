@@ -1,4 +1,3 @@
-import { Button } from "@material-ui/core";
 import React from "react";
 
 const options = {
@@ -38,7 +37,8 @@ export default class OrderSummary extends React.Component {
   render() {
     return (
       <div>
-        <Button onClick={() => this.rzp.open()}>Pay</Button>
+        <h1>To be done in last.</h1>
+        {/*<Button onClick={() => this.rzp.open()}>Pay</Button>*/}
       </div>
       // <Container maxWidth="lg" style={{ margin: "16px auto" }}>
       //   <Typography variant="h5">

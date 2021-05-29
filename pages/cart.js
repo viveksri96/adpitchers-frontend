@@ -4,18 +4,46 @@ import {
   Container,
   Grid,
   Link,
-  Paper,
   Typography,
 } from "@material-ui/core";
+import moment from "moment";
 import React from "react";
+import { CartItem } from "../common/CartItem";
 
 export default class Cart extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      cart: {
+        items: [
+          {
+            id: 10,
+            img: "/assets/billboard_default.png",
+            price: 99,
+            bookingDate: [moment(), moment()],
+            total: 999,
+          },
+          {
+            id: 10,
+            img: "/assets/billboard_default.png",
+            price: 99,
+            bookingDate: [moment(), moment()],
+            total: 999,
+          },
+          {
+            id: 10,
+            img: "/assets/billboard_default.png",
+            price: 99,
+            bookingDate: [moment(), moment()],
+            total: 999,
+          },
+        ],
+      },
+    };
   }
 
   render() {
+    const { cart } = this.state;
     return (
       <Container maxWidth="lg" style={{ margin: "16px auto" }}>
         <Typography variant="h5">
@@ -23,8 +51,7 @@ export default class Cart extends React.Component {
         </Typography>
         <Grid container spacing="4">
           <Grid item xs={7} style={{ flexDirection: "column" }}>
-            <CartItem />
-            <CartItem />
+            <CartItem items={cart.items} />
           </Grid>
           <Grid item xs={5}>
             <Card
@@ -43,13 +70,13 @@ export default class Cart extends React.Component {
               <Link href="/checkout/order-summary">
                 <Button
                   variant="contained"
+                  color="primary"
                   style={{
                     width: 250,
-                    backgroundColor: "#808080a6",
                     color: "white",
                   }}
                 >
-                  <Typography variant="h6">Continue</Typography>
+                  <Typography variant="h6">Checkout</Typography>
                 </Button>
               </Link>
             </Card>
@@ -59,30 +86,3 @@ export default class Cart extends React.Component {
     );
   }
 }
-
-const CartItem = () => {
-  return (
-    <Paper style={{ marginTop: 16 }}>
-      <Grid container style={{ padding: 16 }}>
-        <Grid item xs={8}>
-          <Typography>Jet Black Lightweight Men's Slide</Typography>
-          <Typography>
-            <b>499$</b>
-          </Typography>
-        </Grid>
-        <Grid
-          item
-          xs={4}
-          style={{ display: "flex", justifyContent: "flex-end" }}
-        >
-          <img
-            href="https://images.bewakoof.com/t320/jet-black-lightweight-men-s-slider-men-s-plain-sliders-lightweight-271396-1600059720.jpg"
-            width="100"
-            height="150"
-          />
-        </Grid>
-      </Grid>
-      {/* <Button>Remove</Button> */}
-    </Paper>
-  );
-};

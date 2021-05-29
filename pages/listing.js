@@ -133,7 +133,7 @@ class Listing extends React.Component {
             {!loading ? (
               list && list.length > 0 ? (
                 list.map((billboard) => (
-                  <Grid item>
+                  <Grid item key={billboard.id}>
                     <Link href={`/pd/${billboard.id}`}>
                       <Card className={classes.cardContainer}>
                         <Carousel
@@ -198,7 +198,7 @@ class Listing extends React.Component {
             ) : (
               <div className={classes.loaderContainer}>
                 <div>
-                  <img src={"/assets/loader.gif"} />
+                  <img src={"/assets/loader-32.svg"} />
                 </div>
                 <Typography align="center" variant="body2">
                   <em>

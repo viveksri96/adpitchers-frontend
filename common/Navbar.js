@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-import { AddToQueue, ExitToApp, Receipt, Settings } from "@material-ui/icons";
+import { AccountCircle, ExitToApp, Receipt } from "@material-ui/icons";
 import { withStyles } from "@material-ui/styles";
 
 const styles = {
@@ -159,23 +159,23 @@ class Navbar extends React.Component {
                   }}
                 >
                   <Box className={classes.userDetailsPopover}>
-                    <Link href={"/my-billboard"}>
+                    <Link href={"/user/account"}>
                       <Typography align="left" className={classes.dropdownItem}>
-                        <AddToQueue style={{ marginRight: 6 }} />
-                        Go to console
+                        <AccountCircle style={{ marginRight: 6 }} />
+                        Your Account
                       </Typography>
                     </Link>
-                    <Link href={"/orders-history"}>
+                    <Link href={"/user/order-history"}>
                       <Typography align="left" className={classes.dropdownItem}>
                         <Receipt style={{ marginRight: 6 }} />
-                        Orders
+                        Your Orders
                       </Typography>
                     </Link>
-                    <Link href={"/user/account"}>
+                    {/*<Link href={"/user/account"}>
                       <Typography align="left" className={classes.dropdownItem}>
                         <Settings style={{ marginRight: 6 }} /> Settings
                       </Typography>
-                    </Link>
+                    </Link>*/}
                     <Typography
                       align="left"
                       className={classes.dropdownItem}
