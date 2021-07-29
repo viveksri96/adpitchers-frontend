@@ -4,7 +4,7 @@ export let Axios = undefined
 
 export const createEnv = (config) => {
   Axios = axios.create({
-    baseURL: 'http://13.235.246.176:8000/',
+    baseURL: 'https://www.staging-api.adpitchers.com',
     // timeout: 1000,
     headers: {
       'Content-Type': 'application/json',
