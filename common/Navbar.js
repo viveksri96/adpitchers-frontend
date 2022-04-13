@@ -16,8 +16,6 @@ const styles = {
     top: 0,
     padding: "16px 24px",
     borderBottom: "1px solid #eeeeee",
-    // borderRadius: 3,
-    // boxShadow: '0px 1px 15px 1px rgba(255, 105, 135, .3)',
     background: "white",
   },
   flex: {
@@ -25,6 +23,7 @@ const styles = {
   },
   logo: {
     marginRight: 42,
+    background: "rgb(10, 16, 33)",
   },
   button: {
     height: 40,
@@ -102,9 +101,10 @@ class Navbar extends React.Component {
           <Grid item xs={8} className={classes.flex}>
             <Link href="/">
               <Avatar
+                variant="square"
                 className={classes.logo}
                 alt="logo"
-                src="https://tl.vhv.rs/dpng/s/416-4160680_from-liquipedia-playerunknowns-battlegrounds-wiki-logo-png-for.png"
+                src="/assets/logo.svg"
               />
             </Link>
             {NAVBAR_BTN.map((buttonName, i) => (
